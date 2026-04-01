@@ -1,0 +1,87 @@
+{% load static %}
+{% load book_tags %}
+{% load cache %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <link rel="icon" href="{% static 'image/favicon.ico' %}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!--Лого страницы-->
+<div class="site_branding">
+<div class="logo">
+    <img src="{% static 'image/library_1.ico' %}" alt="Лого">
+</div>
+
+<div class="site_title">
+    <p><b>Библиотека Пушкина</b></p>
+</div>
+</div>
+
+
+<!--Меню страницы-->
+<nav class="navbar">
+  <ul class="nav-list">
+    <li class="nav-left">
+      <ul class="nav-group">
+        {% for m in mainmenu %}
+          <li><a href="{% url m.url_name %}" class="nav-link">{{ m.title }}</a></li>
+        {% endfor %}
+      </ul>
+    </li>
+
+    <li class="nav-right">
+      <ul class="nav-group">
+        {% if user.is_authenticated %}
+          <li><a href="{% url 'users:profile' %}" class="nav-link nav-user">{{ user.username }}</a></li>
+          <li>
+            <form method="post" action="{% url 'users:logout' %}" class="logout-form">
+              {% csrf_token %}
+              <button type="submit" class="nav-link nav-logout">Выйти</button>
+            </form>
+          </li>
+        {% else %}
+          <li><a href="{% url 'users:login' %}" class="nav-link">Войти</a></li>
+          <li><a href="{% url 'users:register' %}" class="nav-link">Регистрация</a></li>
+        {% endif %}
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+<!--Боковая панель страницы-->
+{% cache 30 sidebar %}
+<div class="layout">
+<aside class='sidebar'>
+    <p>Жанры</p>
+    {% show_genres %}
+
+    <p>Теги</p>
+    {% show_tags %}
+</aside>
+{% endcache %}
+
+<!--Подстановка данных из других шаблонов-->
+<!--Основная часть сайта-->
+<main class="content">
+{% block content %}{% endblock %}
+</main>
+</div>
+
+<!--Подвал страницы-->
+<footer>
+<div align="center"><p>@Все права защищены</p></div>
+</footer>
+
+</body>
+</html>

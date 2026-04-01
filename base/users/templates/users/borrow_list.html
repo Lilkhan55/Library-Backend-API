@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>{{ title }}</h1>
+
+{% for l in loans %}
+<ul>
+    <li>Книга: {{ l.books }}</li>
+    <li>Дата взятия: {{ l.borrowed_at }}</li>
+    <li>Срок взятия: {{ l.borrowed_due }}</li>
+    <li>Возвращен: {{ l.returned_at }}</li>
+    {% if l.is_returnded %}
+    <p>Уже возвращен</p>
+    {% else %}
+    <form action="{% url 'libs:return_loan' l.id %}" method="post">
+        {% csrf_token %}
+        <button type="submit">Вернуть книгу</button>
+    </form>
+    {% endif %}
+</ul>
+<hr>
+{% empty %}
+<p>У вас пока нет взятых книг</p>
+<a href="{% url 'libs:all' %}">Перейти в библиотеку</a>
+{% endfor %}
+{% endblock %}

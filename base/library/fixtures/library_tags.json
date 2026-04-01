@@ -1,0 +1,26 @@
+[
+{
+  "model": "library.tagpost",
+  "pk": 1,
+  "fields": {
+    "tag": "Мировая классика",
+    "slug": "mirovaya-klassika"
+  }
+},
+{
+  "model": "library.tagpost",
+  "pk": 2,
+  "fields": {
+    "tag": "Зарубежная литература",
+    "slug": "zarubezhnaya-literatura"
+  }
+},
+{
+  "model": "library.tagpost",
+  "pk": 3,
+  "fields": {
+    "tag": "Русская литература",
+    "slug": "russkaya-literatura"
+  }
+}
+]

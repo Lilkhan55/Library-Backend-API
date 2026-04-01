@@ -1,0 +1,18 @@
+[
+{
+  "model": "library.genre",
+  "pk": 1,
+  "fields": {
+    "name": "Роман",
+    "slug": "roman"
+  }
+},
+{
+  "model": "library.genre",
+  "pk": 2,
+  "fields": {
+    "name": "Проза",
+    "slug": "proza"
+  }
+}
+]

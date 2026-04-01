@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load book_tags %}
+
+<!--Заголовок страницы-->
+<section>
+
+  <h1>{{ title }}</h1>
+  <h2>Подборка книг</h2>
+
+</section>
+
+<!--Карточка книг-->
+<main class="main-part">
+<ul>
+  {% for u in books %}
+  {% if u.counts %}
+  <li>
+    <article>
+    {% if u.cover  %}
+      <img src="{{ u.cover.url }}" alt="Обложка книги: {{ u.title }}" class="book-cover">
+    {% endif %}
+    <div class="book-card">
+      <h2>{{ u.title }}</h2>
+      <p>{{ u.author }}</p>
+      <p>{{ u.genre }}</p>
+      <p>{{ u.description|truncatewords:20 }}</p>
+    </div>
+    {% if u.slug %}
+      <p><a href="{{ u.get_absolute_url }}" class="btn">Читать подробнее</a></p>
+    {% else %}
+      <p>Читать подробнее</p>
+    {% endif %}
+    {% if not forloop.last %}
+    <hr>
+    {% endif %}
+    </article>
+  </li>
+  {% endif %}
+  {% endfor %}
+</ul>
+</main>
+
+{% block navigation %}
+{% if page_obj.has_other_pages %}
+<nav class="list-pages">
+<ul>
+  {% if page_obj.has_previous %}
+  <li class="page-num">
+    <a href="?page={{ page_obj.previous_page_number }}">&lt</a>
+  </li>
+  {% endif %}
+
+  {% for i in paginator.page_range %}
+    {% if page_obj.number == i %}
+      <li class="page_num page-num-selected">{{ i }}</li>
+    {% elif i >= page_obj.number|add:-2 and i <= page_obj.number|add:2 %}
+      <li class="page_num">
+        <a href="?page={{ i }}">{{ i }}</a>
+      </li>
+    {% endif %}
+  {% endfor %}
+
+  {% if page_obj.has_next %}
+  <li class="page-num">
+    <a href="?page={{ page_obj.next_page_number }}">&gt</a>
+  </li>
+  {% endif %}
+</ul>
+</nav>
+{% endif %}
+{% endblock %}
+
+{% endblock %}

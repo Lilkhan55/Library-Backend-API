@@ -1,0 +1,26 @@
+# secrets
+.env
+client_secret*.json
+data.json
+db.json
+
+# certificates
+cert.crt
+cert.key
+
+# venv
+.venv
+
+# caches
+.pytest_cache
+
+# vscode
+.vscode
+
+#pycache
+base/library/__pycache__/
+base/tests/__pycache__/
+
+# staticfiles & media
+base/staticfiles
+base/media

@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="profile-page">
+    <h1>{{title}}</h1>
+    <form class="profile-card" action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="profile-head">
+            <div class="avatar">
+                {% if user.photo %}
+                    <img src="{{ user.photo.url }}" alt="Аватар">
+                {% else %}
+                <img src="{{ default_image }}" alt="Аватар">
+                {% endif %}
+            </div>
+        </div>
+
+    <div class="form-grid">
+        <div class="form-error">{{ form.non_field_errors }}</div>
+            {% for f in form %}
+                <p><label class="form-label" for="{{ f.id_for_label }}">{{ f.label }}</label>{{ f }}</p>
+                <div class="form-error">{{ f.errors }}</div>
+            {% endfor %}
+    </div>
+
+    <div class='loan-list'>
+        <a href="{% url 'users:borrow_list' %}">Посмотреть список моих книг</a>
+    </div>
+
+    <div class="form-actions">
+        <p><button type="submit">Cохранить</button></p>
+    </div>
+    </form>
+
+    {% if not perms.users.social_auth %}
+    <hr>
+        <p><a href="{% url 'users:password_change' %}">Сменить пароль</a></p>
+    {% endif %}
+</div>
+{% endblock %}

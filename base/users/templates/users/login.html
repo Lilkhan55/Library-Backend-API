@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<div class="auth-page">
+  <h1 class="auth-title">{{ title }}</h1>
+
+  <form method="post" class="auth-card">
+    {% csrf_token %}
+
+    <div class="form-error">{{ form.non_field_errors }}</div>
+
+    <div class="auth-grid">
+      {% for f in form %}
+        <div class="auth-row">
+          <label class="auth-label" for="{{ f.id_for_label }}">{{ f.label }}</label>
+          <div class="auth-field">{{ f }}</div>
+          <div class="form-error">{{ f.errors }}</div>
+        </div>
+      {% endfor %}
+    </div>
+
+    <button type="submit" class="btn-primary">Войти</button>
+
+    <div class="auth-links">
+      <a href="{% url 'users:password_reset' %}">Забыли пароль?</a>
+    </div>
+
+    <div class="oauth-block">
+      <div class="oauth-title">Войти через</div>
+      <div class="oauth-buttons">
+        <a class="oauth-btn" href="{% url 'social:begin' 'github' %}" aria-label="GitHub">
+          <img src="{% static 'image/githubico.ico' %}" alt="GitHub">
+        </a>
+        <a class="oauth-btn" href="{% url 'social:begin' 'google-oauth2' %}" aria-label="Google">
+          <img src="{% static 'image/google.ico' %}" alt="Google">
+        </a>
+      </div>
+    </div>
+  </form>
+</div>
+
+{% endblock %}

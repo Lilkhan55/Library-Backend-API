@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load book_tags %}
+<div class="single_book-container">
+
+    <div class="single_book-header">
+        <h1>{{ title }}</h1>
+        {% if perms.library.change_book %}
+        <a class="edit-btn" href="{% url 'libs:edit' book.slug %}">
+            Редактировать
+        </a>
+        {% endif %}
+    </div>
+
+    <div class="single_book-layout">
+
+        <div class="single_book-cover">
+            {% if book.cover %}
+            <img src="{{ book.cover.url }}" alt="{{ book.title }}">
+            {% endif %}
+        </div>
+
+        <div class="single_book-info">
+            <p class="single_book-author">{{ book.author }}</p>
+            <p class="single_book-genre">{{ book.genre }}</p>
+
+            <div class="single_book-description">
+                <h3>Описание</h3>
+                <p>{{ book.description }}</p>
+            </div>
+
+            <div class="single_book-actions">
+                <a class="download-btn" href="{{ book.has_file.url }}" target="_blank">
+                    Скачать PDF
+                </a>
+
+                {% if user.is_authenticated %}
+                    {% if book.counts > 0 %}
+                    <form action="{% url 'libs:loan' book.slug %}" method="post">
+                        {% csrf_token %}
+                        <button class="loan-btn" type="submit">Взять копию</button>
+                    </form>
+                    {% else %}
+                    <p class="no-stock">Нет доступных копий</p>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,7 @@
+<ul>
+    {% for genreg in genres %}
+    <li>
+    <a href={{ genreg.get_absolute_url }}>{{ genreg.name }}</a>
+    </li>
+    {% endfor %}
+</ul>

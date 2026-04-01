@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>{{ title }}</h1>
+
+<p>
+    Если у вас есть вопросы, предложения или замечания по работе библиотеки,
+    вы можете отправить сообщение с помощью формы ниже.
+</p>
+
+<form method="post">
+    {% csrf_token %}
+
+    <div class="form-error">{{ form.non_field_errors }}</div>
+
+    <div class="contact-grid">
+      {% for f in form %}
+        <div class="contact-row">
+          <label class="contact-label" for="{{ f.id_for_label }}">{{ f.label }}</label>
+          <div class="contact-field">{{ f }}</div>
+          <div class="form-error">{{ f.errors }}</div>
+        </div>
+      {% endfor %}
+    </div>
+
+    <button class="btn-contact" type="submit">Отправитель</button>
+</form>
+
+<section>
+    <p>Вы также можете обратиться к нам через источники ниже</p>
+    <h2>Контактная информация</h2>
+    <p>Email: orazalim68@yandex.ru</p>
+    <p>Телефон: +7 (000) 000-00-00</p>
+</section>
+{% endblock %}

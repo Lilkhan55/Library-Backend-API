@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="reg-page">
+  <h1 class="reg-title">{{ title }}</h1>
+
+  <form method="post" class="reg-card">
+    {% csrf_token %}
+
+    <div class="form-error">{{ form.non_field_errors }}</div>
+
+    <div class="reg-grid">
+      {% for f in form %}
+        <div class="reg-row">
+          <label class="reg-label" for="{{ f.id_for_label }}">{{ f.label }}</label>
+          <div class="reg-field">{{ f }}</div>
+          <div class="form-error">{{ f.errors }}</div>
+        </div>
+      {% endfor %}
+
+      <button type="submit" class="btn-primary">Зарегистрироваться</button>
+
+      <div class="reg-links">
+      <a href="{% url 'users:login' %}">У вас уже есть аккаунт?</a>
+    </div>
+    </div>
+{% endblock %}
