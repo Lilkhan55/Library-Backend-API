@@ -1,14 +1,9 @@
-from io import BytesIO
-
 from django.db import models
 
 from django.core.validators import MinValueValidator
 from django.urls import reverse
-from django.core.files import File
-from django.core.files.base import ContentFile
 
 from pytils.translit import slugify
-from PIL import Image
 
 from users.models import User
 
@@ -47,6 +42,7 @@ class Book(models.Model):
     tags = models.ManyToManyField('TagPost', blank=True, related_name='tags')
     cover = models.ImageField(upload_to='сovers', default=None, blank=True, null=True, verbose_name='Обложка')
     has_file = models.FileField(upload_to='files', default=None, blank=True, null=True, verbose_name='Файл')
+    user = models.ForeignKey(User, verbose_name='Пользователь', default=1, on_delete=models.SET_DEFAULT)
 
     objects = models.Manager()
     instock = InstockManager()

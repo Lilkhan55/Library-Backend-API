@@ -45,6 +45,9 @@ typing-extensions = "==4.15.0"
 tzdata = "==2025.3"
 urllib3 = "==2.6.3"
 werkzeug = "==3.1.5"
+djoser = "*"
+drf-spectacular = "*"
+django-filter = "*"
 
 [dev-packages]
 

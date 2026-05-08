@@ -3,6 +3,7 @@
 client_secret*.json
 data.json
 db.json
+schema.yml
 
 # certificates
 cert.crt
@@ -24,3 +25,8 @@ base/tests/__pycache__/
 # staticfiles & media
 base/staticfiles
 base/media
+
+# tutorial
+.api
+gunicorn.ctl
+*.ctl

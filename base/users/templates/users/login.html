@@ -5,20 +5,11 @@
 <div class="auth-page">
   <h1 class="auth-title">{{ title }}</h1>
 
-  <form method="post" class="auth-card">
+  <form method="post" class="auth-card" action="/users/api/login/">
     {% csrf_token %}
-
-    <div class="form-error">{{ form.non_field_errors }}</div>
-
-    <div class="auth-grid">
-      {% for f in form %}
-        <div class="auth-row">
-          <label class="auth-label" for="{{ f.id_for_label }}">{{ f.label }}</label>
-          <div class="auth-field">{{ f }}</div>
-          <div class="form-error">{{ f.errors }}</div>
-        </div>
-      {% endfor %}
-    </div>
+    
+    <input name="username" placeholder="Логин">
+    <input name="password" placeholder="Пароль">
 
     <button type="submit" class="btn-primary">Войти</button>
 

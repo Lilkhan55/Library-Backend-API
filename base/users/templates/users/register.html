@@ -5,19 +5,16 @@
 <div class="reg-page">
   <h1 class="reg-title">{{ title }}</h1>
 
-  <form method="post" class="reg-card">
+  <form method="post" class="reg-card" action="/users/api/register/">
     {% csrf_token %}
 
-    <div class="form-error">{{ form.non_field_errors }}</div>
+    <input name="username" placeholder="Логин">
+    <input name="email" placeholder="E-mail">
+    <input name="first_name" placeholder="Имя">
+    <input name="last_name" placeholder="Фамилия">
 
-    <div class="reg-grid">
-      {% for f in form %}
-        <div class="reg-row">
-          <label class="reg-label" for="{{ f.id_for_label }}">{{ f.label }}</label>
-          <div class="reg-field">{{ f }}</div>
-          <div class="form-error">{{ f.errors }}</div>
-        </div>
-      {% endfor %}
+    <input name="password1" placeholder="Пароль">
+    <input name="password2" placeholder="Подтвердите пароль">
 
       <button type="submit" class="btn-primary">Зарегистрироваться</button>
 

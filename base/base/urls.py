@@ -15,16 +15,16 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
-from library.views import page_not_found
+from django.urls import path, include, re_path
 from django.conf.urls.static import static
-from . import settings
 from django.contrib.sitemaps.views import sitemap
 from django.views.decorators.cache import cache_page
-
 from debug_toolbar.toolbar import debug_toolbar_urls
 
+from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
+
 from library.sitemaps import LibSitemap, GenreSitemap, TagSitemap
+from . import settings
 
 sitemaps = {
     'libs': LibSitemap,
@@ -34,11 +34,15 @@ sitemaps = {
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('library.urls', namespace='library')),
     path('users/', include('users.urls', namespace='users')),
+    path('library/', include('library.urls', namespace='api')),
     path('social-auth/', include('social_django.urls', namespace='social')),
     path('captcha/', include('captcha.urls')),
+    path('drf-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('sitemap.xml', cache_page(86400)(sitemap), {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
+    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
+    path('api/schema/swagger-ui/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
+    path('api/schema/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
 ] + debug_toolbar_urls()
 
 if settings.DEBUG:
@@ -46,8 +50,6 @@ if settings.DEBUG:
         settings.MEDIA_URL,
         document_root=settings.MEDIA_ROOT
     )
-
-handler404 = page_not_found
 
 admin.site.site_header = "Панель администрирования"
 admin.site.index_title = "Известные книги"
