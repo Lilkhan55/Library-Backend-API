@@ -3,7 +3,8 @@
 client_secret*.json
 data.json
 db.json
-schema.yml
+delete_this.md
+
 
 # certificates
 cert.crt
